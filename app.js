@@ -1,6 +1,7 @@
 const express = require('express')
 const passport = require('./config/passport');
 const authController = require("./controllers/auth");
+const Todo = require('./models/todo');
 
 // Routes
 const todoRouter = require("./routes/todo");
