@@ -21,6 +21,15 @@ app.use(express.urlencoded({ extended: false }));
 app.post("/register", authController.register);
 app.post("/login", authController.login);
 
+app.get("/all", async function(req, res) {
+    try {
+        let todos = await Todo.find();
+        return res.status(200).json({ todos });
+    } catch (err) {
+        return res.status(500).json({ err });
+    }
+});
+
 // TODO routes
 app.use("/todo", passport.authenticate('jwt', { session: false }), todoRouter);
 
