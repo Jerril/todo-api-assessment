@@ -33,12 +33,6 @@ exports.register = [
     // sanitize and validate fields
     body("email").normalizeEmail().isEmail(),
     body("password").trim().isLength({ min: 6 }).escape(),
-    body("confirmPassword").trim().isLength({ min: 6 }).escape()
-    .custom(async(value, { req }) => {
-        if (value !== req.body.password)
-            throw new Error("Confirmed Password must be the same as password");
-        return true;
-    }),
     // process request
     async(req, res, next) => {
         // extract errors
@@ -51,12 +45,6 @@ exports.register = [
         if (emailExists.length > 0) {
             return res.status(409).json({
                 error: "Email already exists",
-            });
-        }
-
-        if (req.body.password !== req.body.confirmPassword) {
-            return res.status(401).json({
-                error: "Confirmed Password must be the same as password.",
             });
         }
 
