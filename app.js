@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors');
 const passport = require('./config/passport');
 const authController = require("./controllers/auth");
 const Todo = require('./models/todo');
@@ -6,7 +7,7 @@ const Todo = require('./models/todo');
 // Routes
 const todoRouter = require("./routes/todo");
 
-const app = express()
+const app = express();
 
 // Set up mongoose
 const mongoose = require("mongoose");
@@ -17,6 +18,9 @@ db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// cors
+app.use(cors());
 
 // Auth routes
 app.post("/register", authController.register);
